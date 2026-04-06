@@ -1,4 +1,4 @@
-import {cart,deleteCartItem} from '../data/cart.js';
+import {cart,deleteCartItem,chooseDeliveryOption} from '../data/cart.js';
 import {products} from '../data/products.js';
 import {formatCurrency} from './utils/money.js';
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
@@ -96,7 +96,9 @@ function delivery(matchingProduct,cartItem){
       shippingStr=`$${formatCurrency(option.deliveryPrice)} - shipping`;
     }
     
-    html+=`<div class="delivery-option">
+    html+=`<div class="delivery-option js-delivery-option"
+    data-product-id=${matchingProduct.id}
+    data-delivery-id=${option.deliveryId}>
                   <input type="radio" 
                   ${isChecked?'checked':''}
                   
@@ -132,4 +134,13 @@ document.querySelectorAll('.js-delete-link').
 
  });
 
+ document.querySelectorAll('.js-delivery-option').forEach(option=>{
+  option.addEventListener('click',()=>{
+    const productId=option.dataset.productId;
+    const deliveryId=option.dataset.deliveryId;
+    console.log(productId);
+    console.log(deliveryId);
+    chooseDeliveryOption(productId,deliveryId);
+  });
+ });
 
