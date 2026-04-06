@@ -21,9 +21,6 @@ export function chooseDeliveryOption(productId,deliveryOptionId){
       matchingProduct.deliveryId=deliveryOptionId;
       console.log(matchingProduct);
     }
-    // console.log(matchingProduct);
-    // matchingProduct.deliveryId=deliveryOptionId;
-    // console.log(matchingProduct);
   });
   localStorage.setItem('cart',JSON.stringify(cart));
 
