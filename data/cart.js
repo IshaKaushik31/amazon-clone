@@ -17,9 +17,9 @@ export function chooseDeliveryOption(productId,deliveryOptionId){
   cart.forEach(cartItem=>{
     if(productId===cartItem.productId){
       matchingProduct=cartItem;
-      console.log(matchingProduct);
+      
       matchingProduct.deliveryId=deliveryOptionId;
-      console.log(matchingProduct);
+     
     }
   });
   localStorage.setItem('cart',JSON.stringify(cart));

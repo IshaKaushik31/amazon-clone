@@ -1,3 +1,18 @@
+ export function getDeliveryCost(deliveryID){
+  
+  let matchingOption;
+  deliveryOptions.forEach(option=>{
+    
+    if(option.deliveryId===deliveryID){
+      matchingOption=option;
+    }
+    
+    
+
+  });
+  return matchingOption;
+ }
+ 
  export const deliveryOptions=[{
   deliveryId:'1',
   deliveryDays:7,
