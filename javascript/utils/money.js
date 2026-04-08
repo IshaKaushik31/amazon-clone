@@ -4,3 +4,4 @@ export function formatCurrency(curr){
 }
 // .tofixed to round the number to 2 decimal places
 // but for some numbers which end in 5 like 6.005 or 7.005 it will not round off properly so we use Math.round. 
+//toFixed returns number as a string so the return type of this function is string.
