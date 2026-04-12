@@ -30,7 +30,7 @@ cart.forEach((cartItem)=>{
 
 
   cartHTML+=`<div class="order-summary">
-          <div class="cart-item-container-${matchingProduct.id}">
+          <div class="js-cart-item-container cart-item-container-${matchingProduct.id}">
             <div class="delivery-date">
               Delivery date: ${formatOption}
             </div>
@@ -46,14 +46,14 @@ cart.forEach((cartItem)=>{
                 <div class="product-price">
                   $${formatCurrency(matchingProduct.priceCents)}
                 </div>
-                <div class="product-quantity">
+                <div class="js-product-quantity-${matchingProduct.id} product-quantity">
                   <span>
-                    Quantity: <span class="quantity-label">${cartItem.quantity}</span>
+                    Quantity: <span class=quantity-label-">${cartItem.quantity}</span>
                   </span>
                   <span class="js-update-link update-quantity-link link-primary">
                     Update
                   </span>
-                  <span data-delete-link='${matchingProduct.id}' class="js-delete-link delete-quantity-link link-primary">
+                  <span data-delete-link='${matchingProduct.id}' class="js-delete-link delete-quantity-link link-primary js-delete-link-${matchingProduct.id}">
                     Delete
                   </span>
                 </div>
