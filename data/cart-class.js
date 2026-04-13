@@ -1,14 +1,14 @@
 class Cart{
   
   cartItem;
-  storageKey;
+  #storageKey;
   constructor(key){
-    this.storageKey=key;
-    this.loadStorage();
+    this.#storageKey=key;
+    this.#loadStorage();
   }
 
-  loadStorage(){
-  this.cartItem=JSON.parse(localStorage.getItem(this.storageKey));
+  #loadStorage(){
+  this.cartItem=JSON.parse(localStorage.getItem(this.#storageKey));
   if(this.cartItem===null){
       this.cartItem=[{
       productId:"e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
@@ -33,7 +33,7 @@ class Cart{
      
     }
   });
-  localStorage.setItem(this.storageKey,JSON.stringify(this.cartItems));
+  localStorage.setItem(this.#storageKey,JSON.stringify(this.cartItems));
 
 }
 
@@ -55,7 +55,7 @@ class Cart{
 
     });
     } 
-    localStorage.setItem(this.storageKey,JSON.stringify(this.cartItem));
+    localStorage.setItem(this.#storageKey,JSON.stringify(this.cartItem));
 }
  deleteCartItem(prodID){
   let newCart=[];
@@ -68,7 +68,7 @@ class Cart{
 
   });
   this.cartItem=newCart;
-  localStorage.setItem(this.storageKey,JSON.stringify(this.cartItem));
+  localStorage.setItem(this.#storageKey,JSON.stringify(this.cartItem));
 }
 
 
