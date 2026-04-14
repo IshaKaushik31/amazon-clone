@@ -36,6 +36,21 @@ class Product{
     return ' ';
   }
 }
+const obj={
+  
+  method:()=>{
+    console.log(this);
+
+  },
+  
+  method1(){
+    console.log(this);
+
+
+  }
+}
+obj.method();
+obj.method1();
 class Clothing extends Product{
   sizeChartLink;
   constructor(prodObj){
