@@ -30,6 +30,7 @@ describe('test suite:renderOrderSummary',()=>{
   })
   it('displays the cart',()=>{
     
+    
     expect(document.querySelectorAll(".js-cart-item-container").length).toEqual(2);
     expect(document.querySelector(`.js-product-quantity-${id1}`).innerText).toContain('Quantity: 2');
     expect(document.querySelector(`.js-product-quantity-${id2}`).innerText).toContain('Quantity: 1');
@@ -38,6 +39,7 @@ describe('test suite:renderOrderSummary',()=>{
 
   })
   it('deletes an item',()=>{
+    
     document.querySelector(`.js-delete-link-${id1}`).click();
     expect(document.querySelectorAll('.js-cart-item-container').length).toEqual(1);
     expect(document.querySelector(`.cart-item-container-${id1}`)).toEqual(null);
