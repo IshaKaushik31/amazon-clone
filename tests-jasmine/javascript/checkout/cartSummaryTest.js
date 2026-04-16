@@ -1,12 +1,16 @@
 import{renderOrderSummary} from '../../../javascript/checkout/cartSummary.js';
 import{loadStorage,cart} from '../../../data/cart.js';
-import{loadProductsFromBackend} from'../../../data/products.js';
+import{loadProductsFromBackend,productsFetch} from'../../../data/products.js';
 describe('test suite:renderOrderSummary',()=>{
   beforeAll((done)=>{
-    loadProductsFromBackend(()=>{
+    productsFetch().then(()=>{
       done();
     });
   });
+  //   loadProductsFromBackend(()=>{
+  //     done();
+  //   });
+  // });
   const id1="e43638ce-6aa0-4b85-b27f-e1d07eb678c6";
   const id2="15b6fc6f-327a-4ec4-896f-486349e85a3d";
   

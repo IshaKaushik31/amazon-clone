@@ -63,6 +63,20 @@ class Clothing extends Product{
   }
 }
 export let products=[];
+export function productsFetch(){
+  const result=fetch('https://supersimplebackend.dev/products').then((response)=>{
+    return response.json();
+  }).then((products)=>{
+    products=products.map((item)=>{
+      if(item.type==='clothing') return new Clothing(item);
+      return new Product(item);
+    })
+    console.log(products);
+  });
+  return result;
+}
+//a fetch returns a promise so we ca return the fetch in the function , call the function and then use .then() this was we can determine what to do after fetch
+productsFetch();
 export function loadProductsFromBackend(fun){
   const xhr=new XMLHttpRequest;
   xhr.addEventListener('load',()=>{
@@ -71,12 +85,12 @@ export function loadProductsFromBackend(fun){
       return new Product(item);
     });
     console.log(products);
-    fun();
+    // fun();
   })
   xhr.open('GET','https://supersimplebackend.dev/products');
   xhr.send();
 }
-// loadProductsFromBackend();
+loadProductsFromBackend();
 
 // products.map((item)=>{
 //   if(item.type==='clothing') return new Clothing(item);
