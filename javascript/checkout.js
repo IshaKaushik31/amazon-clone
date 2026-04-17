@@ -5,6 +5,21 @@ import{loadCart} from'../data/cart.js';
 
 //using async-await instead of Promise.all
 async function loadPage(){
+  //throw 'error1'; (creating manual errors) (if we throw an error then the entire code will be skipped andit go directly to catch with error=error1)
+  try{
+    await productsFetch();
+    await new Promise((resolve,reject)=>{
+      // throw 'error2'; (creating manual errors for promise)
+      loadCart(()=>{
+        // reject('error3'); (creating error for the future)
+        resolve(1);//1 just to check
+      });
+    });
+
+  } catch(error){
+    console.log('unexpected error');
+  }
+  //error handling in async-await
   await productsFetch();
   await new Promise((resolve)=>{
     loadCart(()=>{

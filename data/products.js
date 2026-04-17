@@ -73,7 +73,10 @@ export function productsFetch(){
     })
     console.log(products);
     console.log('products loaded');
-  });
+  }).catch((error)=>{
+      console.log('unexpected error. pls try later');
+  })
+  //error handling in promises
   return result;
 }
 //a fetch returns a promise so we ca return the fetch in the function , call the function and then use .then() this was we can determine what to do after fetch
@@ -88,6 +91,10 @@ export function loadProductsFromBackend(fun){
     console.log(products);
     // fun();
   })
+  //error handling
+  xhr.addEventListener('error',(error)=>{
+    console.log('unexpected error. please try again later');
+  });
   xhr.open('GET','https://supersimplebackend.dev/products');
   xhr.send();
 }
