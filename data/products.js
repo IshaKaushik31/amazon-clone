@@ -72,6 +72,7 @@ export function productsFetch(){
       return new Product(item);
     })
     console.log(products);
+    console.log('products loaded');
   });
   return result;
 }
