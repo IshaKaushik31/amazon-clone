@@ -2,10 +2,9 @@ import{renderOrderSummary} from '../../../javascript/checkout/cartSummary.js';
 import{loadStorage,cart} from '../../../data/cart.js';
 import{loadProductsFromBackend,productsFetch} from'../../../data/products.js';
 describe('test suite:renderOrderSummary',()=>{
-  beforeAll((done)=>{
-    productsFetch().then(()=>{
-      done();
-    });
+  beforeAll(async()=>{
+    await productsFetch();
+    
   });
   //   loadProductsFromBackend(()=>{
   //     done();

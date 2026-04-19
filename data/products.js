@@ -12,7 +12,7 @@
 
 return matchingItem;
 }
-class Product{
+export class Product{
   id;
   image;
   name;
@@ -51,7 +51,7 @@ const obj={
 }
 obj.method();
 obj.method1();
-class Clothing extends Product{
+export class Clothing extends Product{
   sizeChartLink;
   constructor(prodObj){
     super(prodObj);
@@ -61,6 +61,21 @@ class Clothing extends Product{
   extraInfoHTML(){
     return `<a href=${this.sizeChartLink} target=_blank>Size Chart</a>`
   }
+}
+export class Appliance extends Product{
+  instructionsLink;
+  warrantyLink;
+  constructor(prodObj){
+    super(prodObj);
+    this.instructionsLink=prodObj.instructLink;
+    this.warrantyLink=prodObj.warrantLink;
+  }
+  extraInfoHTML(){
+    const html= `<a href=${this.instructionsLink} target=_blank>Instructions</a><a href=${this.warrantyLink} target=_blank>Warranty</a>`;
+
+    return html;
+  }
+
 }
 export let products=[];
 export function productsFetch(){
@@ -162,6 +177,9 @@ export const products = [
       count: 2197
     },
     priceCents: 1899,
+    type:'appliance',
+    instructLink:'images/appliance-instruction.png',
+    warrantyLink:'images/appliance-warranty.png',
     keywords: [
       "toaster",
       "kitchen",
@@ -767,7 +785,9 @@ export const products = [
   }
 ].map((item)=>{
   if(item.type==='clothing') return new Clothing(item);
+  if(item.type==='appliance') return new Appliance(item);
   return new Product(item);
 
 });
 */
+
