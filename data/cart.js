@@ -19,7 +19,8 @@ export function loadStorage(){
 
 
 export function chooseDeliveryOption(productId,deliveryOptionId){
-  let matchingProduct;
+  if(deliveryOptionId==='1' || deliveryOptionId==='2'|| deliveryOptionId==='3'){
+    let matchingProduct;
   cart.forEach(cartItem=>{
     if(productId===cartItem.productId){
       matchingProduct=cartItem;
@@ -28,7 +29,14 @@ export function chooseDeliveryOption(productId,deliveryOptionId){
      
     }
   });
+  if(matchingProduct===undefined) return;
   localStorage.setItem('cart',JSON.stringify(cart));
+
+  }
+  else{
+    return;
+  }
+  
 
 }
 

@@ -11,4 +11,10 @@ describe('Test suite:format currency',()=>{
   it('checking for decimal input',()=>{
     expect(formatCurrency(2000.5)).toEqual('20.01');
   })
+  it('checking round down',()=>{
+    expect(formatCurrency(2000.4)).toEqual('20.00');
+  })
+  it('checking negative number',()=>{
+    expect(formatCurrency(-2000.5)).toEqual('-20.00');
+  })
 });

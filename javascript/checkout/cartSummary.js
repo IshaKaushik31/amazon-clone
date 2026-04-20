@@ -40,10 +40,10 @@ cart.forEach((cartItem)=>{
                 src="${matchingProduct.image}">
 
               <div class="cart-item-details">
-                <div class="product-name">
+                <div class="product-name js-product-name-${matchingProduct.id}">
                   ${matchingProduct.name}
                 </div>
-                <div class="product-price">
+                <div class="product-price js-product-price-${matchingProduct.id}">
                   $${matchingProduct.getCurrency()}
                 </div>
                 <div class="js-product-quantity-${matchingProduct.id} product-quantity">
@@ -94,13 +94,13 @@ function delivery(matchingProduct,cartItem){
       shippingStr=`$${formatCurrency(option.deliveryPrice)} - shipping`;
     }
     
-    html+=`<div class="delivery-option js-delivery-option"
+    html+=`<div class="delivery-option js-delivery-option js-delivery-option-${matchingProduct.id}-${option.deliveryId}"
     data-product-id=${matchingProduct.id}
     data-delivery-id=${option.deliveryId}>
                   <input type="radio" 
                   ${isChecked?'checked':''}
                   
-                    class="delivery-option-input"
+                    class="delivery-option-input js-delivery-option-input-${matchingProduct.id}-${option.deliveryId}"
                     name="delivery-option-${matchingProduct.id}">
                   <div>
                     <div class="delivery-option-date">
