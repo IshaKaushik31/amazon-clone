@@ -1,8 +1,10 @@
 import {cart,addToCart} from '../data/cart.js';
-import {products,loadProductsFromBackend} from '../data/products.js';
+import {products,loadProductsFromBackend,productsFetch} from '../data/products.js';
 import {formatCurrency} from'./utils/money.js';
-loadProductsFromBackend(renderProductGrid);
-function renderProductGrid(){
+// loadProductsFromBackend(renderProductGrid);
+async function renderProductGrid(){
+  await productsFetch();
+
     let productHTML='';
     products.forEach((product)=>{
         productHTML+=`<div class="product-container">
@@ -82,3 +84,4 @@ function renderProductGrid(){
       });
     });
 }
+renderProductGrid();

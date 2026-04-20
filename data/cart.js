@@ -74,6 +74,13 @@ export function deleteCartItem(prodID){
   cart=newCart;
   localStorage.setItem('cart',JSON.stringify(cart));
 }
+export function calculateCartQuantity(){
+  let quant=0;
+  cart.forEach(item=>{
+    quant+=item.quantity;
+  })
+  return quant;
+}
 export function loadCart(fun){
   const xhr= new XMLHttpRequest();
   xhr.addEventListener('load',()=>{

@@ -4,6 +4,7 @@ import {formatCurrency} from '../utils/money.js';
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 import {deliveryOptions} from '../../data/delivery.js';
 import{renderPaymentSummary} from './paymentSummary.js';
+import { renderCheckoutHeader } from './checkoutHeader.js';
 
 
 export function renderOrderSummary(){
@@ -124,8 +125,10 @@ document.querySelectorAll('.js-delete-link').
   link.addEventListener('click',()=>{
     let prodID=link.dataset.deleteLink;
     deleteCartItem(prodID);
-    const cont=document.querySelector(`.cart-item-container-${prodID}`);
-    cont.remove();
+    // const cont=document.querySelector(`.cart-item-container-${prodID}`);
+    // cont.remove();
+    renderCheckoutHeader();
+    renderOrderSummary();
     renderPaymentSummary();
     
     
