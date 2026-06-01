@@ -1,84 +1,116 @@
-import{addOrder,orders} from '../data/orders.js';
-const html='';
-orders.forEach((order)=>{
-  html+=`
-  <div class="order-container">
-          
-          <div class="order-header">
-            <div class="order-header-left-section">
-              <div class="order-date">
-                <div class="order-header-label">Order Placed:</div>
-                <div>August 12</div>
-              </div>
-              <div class="order-total">
-                <div class="order-header-label">Total:</div>
-                <div>$35.06</div>
-              </div>
-            </div>
+import {getProduct, productsFetch} from '../data/products.js';
+import {orders} from '../data/orders.js';
+import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
+import {formatCurrency} from './utils/money.js';
+import {addToCart} from '../data/cart.js';
 
-            <div class="order-header-right-section">
-              <div class="order-header-label">Order ID:</div>
-              <div>27cba69d-4c3d-4098-b42d-ac7fa62b7664</div>
+async function loadPage() {
+  await productsFetch();
+
+  let ordersHTML = '';
+
+  orders.forEach((order) => {
+    const orderTimeString = dayjs(order.orderTime).format('MMMM D');
+
+    ordersHTML += `
+      <div class="order-container">
+        <div class="order-header">
+          <div class="order-header-left-section">
+            <div class="order-date">
+              <div class="order-header-label">Order Placed:</div>
+              <div>${orderTimeString}</div>
+            </div>
+            <div class="order-total">
+              <div class="order-header-label">Total:</div>
+              <div>$${formatCurrency(order.totalCostCents)}</div>
             </div>
           </div>
-
-          <div class="order-details-grid">
-            <div class="product-image-container">
-              <img src="images/products/athletic-cotton-socks-6-pairs.jpg">
-            </div>
-
-            <div class="product-details">
-              <div class="product-name">
-                Black and Gray Athletic Cotton Socks - 6 Pairs
-              </div>
-              <div class="product-delivery-date">
-                Arriving on: August 15
-              </div>
-              <div class="product-quantity">
-                Quantity: 1
-              </div>
-              <button class="buy-again-button button-primary">
-                <img class="buy-again-icon" src="images/icons/buy-again.png">
-                <span class="buy-again-message">Buy it again</span>
-              </button>
-            </div>
-
-            <div class="product-actions">
-              <a href="tracking.html?orderId=123&productId=456">
-                <button class="track-package-button button-secondary">
-                  Track package
-                </button>
-              </a>
-            </div>
-
-            <div class="product-image-container">
-              <img src="images/products/adults-plain-cotton-tshirt-2-pack-teal.jpg">
-            </div>
-
-            <div class="product-details">
-              <div class="product-name">
-                Adults Plain Cotton T-Shirt - 2 Pack
-              </div>
-              <div class="product-delivery-date">
-                Arriving on: August 19
-              </div>
-              <div class="product-quantity">
-                Quantity: 2
-              </div>
-              <button class="buy-again-button button-primary">
-                <img class="buy-again-icon" src="images/icons/buy-again.png">
-                <span class="buy-again-message">Buy it again</span>
-              </button>
-            </div>
-
-            <div class="product-actions">
-              <a href="tracking.html">
-                <button class="track-package-button button-secondary">
-                  Track package
-                </button>
-              </a>
-            </div>
+          <div class="order-header-right-section">
+            <div class="order-header-label">Order ID:</div>
+            <div>${order.id}</div>
           </div>
         </div>
-  `;
-})
+        <div class="order-details-grid">
+          ${productsListHTML(order)}
+        </div>
+      </div>
+    `;
+  });
+
+  function productsListHTML(order) {
+    let productsListHTML = '';
+
+    order.products.forEach((productDetails) => {
+      const product = getProduct(productDetails.productId);
+
+      productsListHTML += `
+        <div class="product-image-container">
+          <img src="${product.image}">
+        </div>
+        <div class="product-details">
+          <div class="product-name">
+            ${product.name}
+          </div>
+          <div class="product-delivery-date">
+            Arriving on: ${
+              dayjs(productDetails.estimatedDeliveryTime).format('MMMM D')
+            }
+          </div>
+          <div class="product-quantity">
+            Quantity: ${productDetails.quantity}
+          </div>
+          
+          <button class="buy-again-button button-primary js-buy-again"
+            data-product-id="${product.id}">
+            <img class="buy-again-icon" src="images/icons/buy-again.png">
+            <span class="buy-again-message">Buy it again</span>
+          </button>
+        </div>
+        <div class="product-actions">
+          <a href="tracking.html?orderId=${order.id}&productId=${product.id}">
+            <button class="track-package-button button-secondary">
+              Track package
+            </button>
+          </a>
+        </div>
+      `;
+    });
+
+    return productsListHTML;
+  }
+
+  document.querySelector('.js-orders-grid').innerHTML = ordersHTML;
+  document.querySelectorAll('.js-buy-again').forEach((button) => {
+    button.addEventListener('click', () => {
+      addToCart(button.dataset.productId);
+
+      // (Optional) display a message that the product was added,
+      // then change it back after a second.
+      button.innerHTML = 'Added';
+      setTimeout(() => {
+        button.innerHTML = `
+          <img class="buy-again-icon" src="images/icons/buy-again.png">
+          <span class="buy-again-message">Buy it again</span>
+        `;
+      }, 1000);
+    });
+  });
+}
+
+loadPage();
+
+document.querySelector('.js-search-bar').addEventListener('input', () => {
+  const searchTerm = document.querySelector('.js-search-bar').value.toLowerCase();
+
+  document.querySelectorAll('.order-container').forEach((orderContainer) => {
+    const productNames = orderContainer.querySelectorAll('.product-name');
+    const orderId = orderContainer.querySelector('.order-header-right-section').textContent.toLowerCase();
+
+    const matchesProduct = Array.from(productNames).some((el) =>
+      el.textContent.toLowerCase().includes(searchTerm)
+    );
+    const matchesOrderId = orderId.includes(searchTerm);
+
+    orderContainer.style.display = (matchesProduct || matchesOrderId) ? '' : 'none';
+  });
+});

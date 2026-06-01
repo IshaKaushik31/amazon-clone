@@ -18,12 +18,14 @@ export class Product{
   name;
   rating;
   priceCents;
+  keywords;
   constructor(prodObj){
     this.id=prodObj.id;
     this.image=prodObj.image;
     this.name=prodObj.name;
     this.rating=prodObj.rating;
     this.priceCents=prodObj.priceCents;
+    this.keywords = prodObj.keywords;
 
   }
   getRatingURL(){
@@ -78,24 +80,19 @@ export class Appliance extends Product{
 
 }
 export let products=[];
-export function productsFetch(){
+export async function productsFetch(){
   const result=fetch('https://supersimplebackend.dev/products').then((response)=>{
     return response.json();
-  }).then((products)=>{
-    products=products.map((item)=>{
+  }).then((data)=>{
+    products=data.map((item)=>{
       if(item.type==='clothing') return new Clothing(item);
       return new Product(item);
-    })
-    console.log(products);
-    console.log('products loaded');
+    });
   }).catch((error)=>{
       console.log('unexpected error. pls try later');
-  })
-  //error handling in promises
+  });
   return result;
 }
-//a fetch returns a promise so we ca return the fetch in the function , call the function and then use .then() this was we can determine what to do after fetch
-productsFetch();
 export function loadProductsFromBackend(fun){
   const xhr=new XMLHttpRequest;
   xhr.addEventListener('load',()=>{
@@ -113,7 +110,6 @@ export function loadProductsFromBackend(fun){
   xhr.open('GET','https://supersimplebackend.dev/products');
   xhr.send();
 }
-loadProductsFromBackend();
 
 // products.map((item)=>{
 //   if(item.type==='clothing') return new Clothing(item);

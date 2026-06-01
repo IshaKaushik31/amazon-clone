@@ -1,4 +1,4 @@
-import {cart,deleteCartItem,chooseDeliveryOption} from '../../data/cart.js';
+import {cart,deleteCartItem,chooseDeliveryOption,updateCartQuantity} from '../../data/cart.js';
 import {products,loadProductsFromBackend} from '../../data/products.js';
 import {formatCurrency} from '../utils/money.js';
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
@@ -51,7 +51,8 @@ cart.forEach((cartItem)=>{
                   <span>
                     Quantity: <span class=quantity-label-">${cartItem.quantity}</span>
                   </span>
-                  <span class="js-update-link update-quantity-link link-primary">
+                  <span class="js-update-link update-quantity-link link-primary"
+                    data-product-id="${matchingProduct.id}">
                     Update
                   </span>
                   <span data-delete-link='${matchingProduct.id}' class="js-delete-link delete-quantity-link link-primary js-delete-link-${matchingProduct.id}">
@@ -135,6 +136,29 @@ document.querySelectorAll('.js-delete-link').
 
   });
 
+ });
+
+ document.querySelectorAll('.js-update-link').forEach((link) => {
+  link.addEventListener('click', () => {
+    const productId = link.dataset.productId;
+    const quantityContainer = document.querySelector(`.js-product-quantity-${productId}`);
+    const cartItem = cart.find((item) => item.productId === productId);
+
+    quantityContainer.innerHTML = `
+      <span>Quantity: <input class="js-quantity-input" type="number" value="${cartItem.quantity}" min="1" max="10" style="width:40px"></span>
+      <span class="js-save-link update-quantity-link link-primary" data-product-id="${productId}">Save</span>
+      <span data-delete-link='${productId}' class="js-delete-link delete-quantity-link link-primary">Delete</span>
+    `;
+
+    quantityContainer.querySelector('.js-save-link').addEventListener('click', () => {
+      const newQuantity = Number(quantityContainer.querySelector('.js-quantity-input').value);
+      if (newQuantity < 1 || newQuantity > 10) return;
+      updateCartQuantity(productId, newQuantity);
+      renderCheckoutHeader();
+      renderOrderSummary();
+      renderPaymentSummary();
+    });
+  });
  });
 
  document.querySelectorAll('.js-delivery-option').forEach(option=>{

@@ -74,6 +74,15 @@ export function deleteCartItem(prodID){
   cart=newCart;
   localStorage.setItem('cart',JSON.stringify(cart));
 }
+export function updateCartQuantity(productId, newQuantity) {
+  cart.forEach((cartItem) => {
+    if (cartItem.productId === productId) {
+      cartItem.quantity = newQuantity;
+    }
+  });
+  localStorage.setItem('cart', JSON.stringify(cart));
+}
+
 export function calculateCartQuantity(){
   let quant=0;
   cart.forEach(item=>{
