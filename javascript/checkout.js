@@ -2,7 +2,7 @@ import{renderOrderSummary} from './checkout/cartSummary.js';
 import{renderPaymentSummary} from './checkout/paymentSummary.js';
 import{loadProductsFromBackend,productsFetch} from'../data/products.js';
 import{loadCart,loadCartFetch} from'../data/cart.js';
-import{renderCheckoutHeader} from '/javascript/checkout/checkoutHeader.js';
+import{renderCheckoutHeader} from './checkout/checkoutHeader.js';
 async function loadPage(){
   try{
   await Promise.all([
