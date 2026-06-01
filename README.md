@@ -3,7 +3,7 @@
 A fully functional e-commerce web app built with vanilla HTML, CSS, and JavaScript.
 
 ## Live Demo
-https://ishakaushik31.github.io/amazon-clone/
+https://amazonshoppp.netlify.app/
 
 ## Features
 - Browse products fetched from a live REST API
