@@ -98,7 +98,9 @@ async function renderProductGrid(){
     document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
       button.addEventListener('click',()=>{
         const productId=button.dataset.productId;
-        addToCart(productId);
+        const productContainer=button.closest('.product-container');
+        const quantity=Number(productContainer.querySelector('select').value);
+        addToCart(productId,quantity);
         updateCartQuantity();
       });
     });

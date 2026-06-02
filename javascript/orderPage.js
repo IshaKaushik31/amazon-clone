@@ -82,7 +82,7 @@ async function loadPage() {
   document.querySelector('.js-orders-grid').innerHTML = ordersHTML;
   document.querySelectorAll('.js-buy-again').forEach((button) => {
     button.addEventListener('click', () => {
-      addToCart(button.dataset.productId);
+      addToCart(button.dataset.productId, 1);
 
       // (Optional) display a message that the product was added,
       // then change it back after a second.
