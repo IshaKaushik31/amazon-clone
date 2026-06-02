@@ -83,6 +83,7 @@ async function loadPage() {
   document.querySelectorAll('.js-buy-again').forEach((button) => {
     button.addEventListener('click', () => {
       addToCart(button.dataset.productId, 1);
+      document.querySelector('.js-cart-quantity').innerHTML = calculateCartQuantity();
 
       // (Optional) display a message that the product was added,
       // then change it back after a second.
